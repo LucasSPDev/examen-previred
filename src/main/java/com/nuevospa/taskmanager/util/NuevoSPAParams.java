@@ -22,10 +22,17 @@ public class NuevoSPAParams {
     
     
     public static final String CODIIGO_ERROR_CREAR_TAREA ="01";
-    public static final String DESC_ERROR_CREAR_TAREA = "No se ha podifo crear la tarea";
+    public static final String DESC_ERROR_CREAR_TAREA = "No se ha podido crear la tarea";
     
     public static final String CODIGO_USUARIO_NO_ENCONTRADO = "02";
     public static final String DESC_USUARIO_NO_ENCONTRADO = "Usuario no conetrado";
+    
+    public static final String CODIGO_CREDENCIALES_NO_VALIDAS = "03";
+    public static final String DESC_CREDENCIALES_NO_VALIDAS = "Credenciales no validas";
+    
+    public static final String CODIGO_ERROR_GENERACION_TOKEN = "04";
+    public static final String DESC_ERROR_GENERACION_TOKEN = "Ha ocurrido un error al generar el token";
+    
 
     // =======================
     // Mensajes Comunes

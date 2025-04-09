@@ -18,4 +18,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Optional<Usuario> findByEmail(String email) {
         return usuarioRepository.findByEmail(email);
     }
+    
+    
+    @Override
+    public Optional<Usuario> findByNombre(String nombre) {
+        return usuarioRepository.findByNombre(nombre);
+    }
+    
+    
 }

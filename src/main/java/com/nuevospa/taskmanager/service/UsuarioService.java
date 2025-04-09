@@ -5,4 +5,5 @@ import java.util.Optional;
 
 public interface UsuarioService {
     Optional<Usuario> findByEmail(String email);
+    Optional<Usuario> findByNombre(String nombre);
 }

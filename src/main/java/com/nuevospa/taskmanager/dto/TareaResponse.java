@@ -12,5 +12,5 @@ public class TareaResponse extends RespuestaBase {
     private String nombre;
     private String descripcion;
     private EstadoTarea estado;
-    private Usuario usuario;
+    private String usuario;
 }

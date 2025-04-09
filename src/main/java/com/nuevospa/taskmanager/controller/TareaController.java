@@ -20,7 +20,6 @@ public class TareaController {
     private TareaService tareaService;
 
     @PostMapping("/crear")
-    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TareaResponse> crearTarea(@RequestBody TareaRequest tareaRequest) {
     	
     	TareaResponse respuesta = new TareaResponse();
@@ -29,7 +28,6 @@ public class TareaController {
     	
     	respuesta = tareaService.crearTarea(tareaRequest);
        
-        
         return ResponseEntity.ok(respuesta);
     }
 

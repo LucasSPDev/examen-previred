@@ -8,8 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TareaRequest {
-    private String nombre;
-    private String descripcion;
-    private EstadoTarea estado;
-    private Usuario usuario;
+    private String nombreTarea;
+    private String descripcionTarea;
+    private long idUsuario;
 }

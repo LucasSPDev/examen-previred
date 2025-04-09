@@ -30,7 +30,7 @@ public class TareaServiceImpl implements TareaService {
         	tareaResponse.setCodigo(NuevoSPAParams.CODIGO_OK);
         	tareaResponse.setDescripcion(NuevoSPAParams.DESCRIPCION_OK);
         	
-        	Optional<Usuario> usuarioOptional = usuarioRepository.findById(tareaRequest.getUsuario().getId());
+        	Optional<Usuario> usuarioOptional = usuarioRepository.findById(tareaRequest.getIdUsuario());
 
             if (usuarioOptional.isEmpty()) {
        
@@ -47,8 +47,8 @@ public class TareaServiceImpl implements TareaService {
             estadoTarea.setId(1L);
             estadoTarea.setNombre(NuevoSPAParams.ESTADO_TAREA_PENDIENTE);
             
-            nuevaTarea.setTitulo(tareaRequest.getNombre());
-            nuevaTarea.setDescripcion(tareaRequest.getDescripcion());
+            nuevaTarea.setTitulo(tareaRequest.getNombreTarea());
+            nuevaTarea.setDescripcion(tareaRequest.getDescripcionTarea());
             nuevaTarea.setEstadoTarea(estadoTarea);
             nuevaTarea.setUsuario(usuario);
 
@@ -65,12 +65,14 @@ public class TareaServiceImpl implements TareaService {
             tareaResponse.setNombre(tareaGuardada.getTitulo());
             tareaResponse.setDescripcion(tareaGuardada.getDescripcion());
             tareaResponse.setEstado(tareaGuardada.getEstadoTarea());
-            tareaResponse.setUsuario(tareaGuardada.getUsuario());
+            tareaResponse.setUsuario(tareaGuardada.getUsuario().getNombre());
             
             
             return tareaResponse;
     		
     	}catch(Exception e) {
+    		
+    		e.printStackTrace();
     		
     		TareaResponse errorTarea = new TareaResponse();
     		errorTarea.setCodigo(NuevoSPAParams.CODIGO_ERROR);
