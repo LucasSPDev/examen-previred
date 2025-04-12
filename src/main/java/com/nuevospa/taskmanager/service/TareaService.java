@@ -1,16 +1,20 @@
 package com.nuevospa.taskmanager.service;
 
-import com.nuevospa.taskmanager.dto.TareaRequest;
-import com.nuevospa.taskmanager.dto.TareaResponse;
-import com.nuevospa.taskmanager.entity.Tarea;
-import com.nuevospa.taskmanager.entity.Usuario;
+import com.nuevospa.taskmanager.dto.CrearTareaRequest;
+import com.nuevospa.taskmanager.dto.CrearTareaResponse;
+
+import com.nuevospa.taskmanager.dto.ListarTareasRequest;
+import com.nuevospa.taskmanager.dto.ListarTareasResponse;
+
+import com.nuevospa.taskmanager.dto.TareaDTO;
+import com.nuevospa.taskmanager.dto.UsuarioDTO;
+
 import java.util.List;
 import java.util.Optional;
 
 public interface TareaService {
-    List<Tarea> findByUsuario(Usuario usuario);
-    Tarea save(Tarea tarea);
-    void delete(Long id);
-    Optional<Tarea> findById(Long id);
-    TareaResponse crearTarea(TareaRequest tareaRequest);
+	
+	CrearTareaResponse crearTarea(CrearTareaRequest request);
+	ListarTareasResponse listarTareasPorEstado(ListarTareasRequest request);
+  
 }

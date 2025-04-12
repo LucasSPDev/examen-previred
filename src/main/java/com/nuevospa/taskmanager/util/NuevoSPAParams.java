@@ -33,6 +33,9 @@ public class NuevoSPAParams {
     public static final String CODIGO_ERROR_GENERACION_TOKEN = "04";
     public static final String DESC_ERROR_GENERACION_TOKEN = "Ha ocurrido un error al generar el token";
     
+    public static final String CODIGO_TAREAS_NO_ENCONTRADAS = "05";
+    public static final String DESC_TAREAS_NO_ENCONTRADAS = "No se han encontrado tareas";
+    
 
     // =======================
     // Mensajes Comunes

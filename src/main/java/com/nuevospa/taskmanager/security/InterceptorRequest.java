@@ -31,11 +31,11 @@ public class InterceptorRequest extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-    	 System.out.println("Interceptor...");
+    	 System.out.println("Inicio Interceptor...");
     	 
-         if (request.getRequestURI().equals("/api/auth/login")) {
+         if (request.getRequestURI().equals("/api/auth/login") || request.getRequestURI().startsWith("/h2-console")) {
         	 
-        	 System.out.println("Excepcion de login");
+        	 System.out.println("Excepcion de login o h2-console");
              filterChain.doFilter(request, response); // Continuar con la cadena de filtros
              return;
          }

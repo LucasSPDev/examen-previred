@@ -1,10 +1,16 @@
 package com.nuevospa.taskmanager.service;
 
 
-import com.nuevospa.taskmanager.dto.TareaRequest;
-import com.nuevospa.taskmanager.dto.TareaResponse;
+import com.nuevospa.taskmanager.dto.CrearTareaRequest;
+import com.nuevospa.taskmanager.dto.CrearTareaResponse;
+
+import com.nuevospa.taskmanager.dto.ListarTareasRequest;
+import com.nuevospa.taskmanager.dto.ListarTareasResponse;
+
 import com.nuevospa.taskmanager.entity.EstadoTarea;
 import com.nuevospa.taskmanager.entity.Tarea;
+import com.nuevospa.taskmanager.dto.TareaDTO;
+import com.nuevospa.taskmanager.dto.UsuarioDTO;
 import com.nuevospa.taskmanager.entity.Usuario;
 import com.nuevospa.taskmanager.repository.TareaRepository;
 import com.nuevospa.taskmanager.repository.UsuarioRepository;
@@ -12,102 +18,138 @@ import com.nuevospa.taskmanager.service.TareaService;
 import com.nuevospa.taskmanager.util.NuevoSPAParams;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 @Service
 public class TareaServiceImpl implements TareaService {
+	
     private final TareaRepository tareaRepository;
     private final UsuarioRepository usuarioRepository;
     
+    public TareaServiceImpl(TareaRepository tareaRepository, UsuarioRepository usuarioRepository) {
+        this.tareaRepository = tareaRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
     
     @Override
-    public TareaResponse crearTarea(TareaRequest tareaRequest) {
+    @Transactional
+    public CrearTareaResponse crearTarea(CrearTareaRequest request) {
     	
     	try {
     		
-    		TareaResponse tareaResponse = new TareaResponse();
-        	tareaResponse.setCodigo(NuevoSPAParams.CODIGO_OK);
-        	tareaResponse.setDescripcion(NuevoSPAParams.DESCRIPCION_OK);
+            Tarea nuevaTarea = new Tarea();
+           
+            
+    		CrearTareaResponse response = new CrearTareaResponse();
+        	response.setCodigo(NuevoSPAParams.CODIGO_OK);
+        	response.setDescripcion(NuevoSPAParams.DESCRIPCION_OK);
         	
-        	Optional<Usuario> usuarioOptional = usuarioRepository.findById(tareaRequest.getIdUsuario());
+        	Optional<Usuario> usuarioOptional = usuarioRepository.findById(request.getIdUsuario());
 
             if (usuarioOptional.isEmpty()) {
        
-            	tareaResponse.setCodigo(NuevoSPAParams.CODIGO_USUARIO_NO_ENCONTRADO);
-            	tareaResponse.setDescripcion(NuevoSPAParams.DESC_USUARIO_NO_ENCONTRADO);
-            	return tareaResponse;
+            	response.setCodigo(NuevoSPAParams.CODIGO_USUARIO_NO_ENCONTRADO);
+            	response.setDescripcion(NuevoSPAParams.DESC_USUARIO_NO_ENCONTRADO);
+            	return response;
             }
 
             Usuario usuario = usuarioOptional.get();
-
-            Tarea nuevaTarea = new Tarea();
-            EstadoTarea estadoTarea = new EstadoTarea();
             
+            EstadoTarea estadoTarea = new EstadoTarea();
             estadoTarea.setId(1L);
             estadoTarea.setNombre(NuevoSPAParams.ESTADO_TAREA_PENDIENTE);
             
-            nuevaTarea.setTitulo(tareaRequest.getNombreTarea());
-            nuevaTarea.setDescripcion(tareaRequest.getDescripcionTarea());
+            nuevaTarea.setTitulo(request.getTituloTarea());
+            nuevaTarea.setDescripcion(request.getDescripcionTarea());
             nuevaTarea.setEstadoTarea(estadoTarea);
             nuevaTarea.setUsuario(usuario);
 
             Tarea tareaGuardada = tareaRepository.save(nuevaTarea);
             
             if (tareaGuardada == null && tareaGuardada.getId() == null) {
-            	tareaResponse.setCodigo(NuevoSPAParams.CODIIGO_ERROR_CREAR_TAREA);
-            	tareaResponse.setDescripcion(NuevoSPAParams.DESC_ERROR_CREAR_TAREA);
-            	return tareaResponse;
+            	response.setCodigo(NuevoSPAParams.CODIIGO_ERROR_CREAR_TAREA);
+            	response.setDescripcion(NuevoSPAParams.DESC_ERROR_CREAR_TAREA);
+            	return response;
             }
             
             
-            tareaResponse.setId(tareaGuardada.getId());
-            tareaResponse.setNombre(tareaGuardada.getTitulo());
-            tareaResponse.setDescripcion(tareaGuardada.getDescripcion());
-            tareaResponse.setEstado(tareaGuardada.getEstadoTarea());
-            tareaResponse.setUsuario(tareaGuardada.getUsuario().getNombre());
+            response.getTarea().setId(tareaGuardada.getId());
+            response.getTarea().setTitulo(tareaGuardada.getTitulo());
+            response.getTarea().setDescripcion(tareaGuardada.getDescripcion());
+            response.getTarea().getEstadoTarea().setNombre(tareaGuardada.getEstadoTarea().getNombre());
+            response.getTarea().getEstadoTarea().setId(tareaGuardada.getEstadoTarea().getId());
+            response.setIdUsuario(tareaGuardada.getUsuario().getId());
             
             
-            return tareaResponse;
+            return response;
     		
     	}catch(Exception e) {
     		
     		e.printStackTrace();
     		
-    		TareaResponse errorTarea = new TareaResponse();
-    		errorTarea.setCodigo(NuevoSPAParams.CODIGO_ERROR);
-    		errorTarea.setDescripcion(NuevoSPAParams.DESCRIPCION_ERROR);
+    		CrearTareaResponse errorResponse = new CrearTareaResponse();
+    		errorResponse.setCodigo(NuevoSPAParams.CODIGO_ERROR);
+    		errorResponse.setDescripcion(NuevoSPAParams.DESCRIPCION_ERROR);
         	
-        	return errorTarea;
+        	return errorResponse;
     		
     	}
     	
     }
-
-    public TareaServiceImpl(TareaRepository tareaRepository, UsuarioRepository usuarioRepository ) {
-        this.tareaRepository = tareaRepository;
-        this.usuarioRepository = usuarioRepository;
-    }
-
-    @Override
-    public List<Tarea> findByUsuario(Usuario usuario) {
-        return tareaRepository.findByUsuario(usuario);
-    }
-
-    @Override
-    public Tarea save(Tarea tarea) {
-        return tareaRepository.save(tarea);
-    }
-
-    @Override
-    public void delete(Long id) {
-        tareaRepository.deleteById(id);
-    }
-
-    @Override
-    public Optional<Tarea> findById(Long id) {
-        return tareaRepository.findById(id);
-    }
     
+    @Override
+    public ListarTareasResponse listarTareasPorEstado(ListarTareasRequest request) {
+    	try {
+    		
+        	ListarTareasResponse response = new ListarTareasResponse();
+        	response.setCodigo(NuevoSPAParams.CODIGO_OK);
+        	response.setDescripcion(NuevoSPAParams.DESCRIPCION_OK);
+        	
+        	List<Tarea> tareasList = null;
+            if (request.getEstadoTarea() != null && !request.getEstadoTarea().isEmpty() && request.getEstadoTarea().equals("ALL")) {
+
+               tareasList = tareaRepository.findByEstadoTarea_Nombre(request.getEstadoTarea());
+                
+            } else {
+            
+            	tareasList = tareaRepository.findAll();
+                 
+            }
+            
+            if(tareasList == null || tareasList.isEmpty()) {
+            	response.setCodigo(NuevoSPAParams.CODIGO_TAREAS_NO_ENCONTRADAS);
+            	response.setDescripcion(NuevoSPAParams.DESC_TAREAS_NO_ENCONTRADAS);
+            }
+
+            List<TareaDTO> tareaDTOList = new ArrayList<>();
+            for (Tarea tarea : tareasList) {
+                TareaDTO dto = new TareaDTO();
+                dto.setId(tarea.getId());
+                dto.setTitulo(tarea.getTitulo());
+                dto.setDescripcion(tarea.getDescripcion());
+                dto.getEstadoTarea().setNombre(tarea.getEstadoTarea().getNombre());
+                dto.getEstadoTarea().setId(tarea.getEstadoTarea().getId());
+                tareaDTOList.add(dto);
+            }
+            
+            response.setListaTareas(tareaDTOList);
+        	
+        	return response;
+    		
+    	}catch(Exception e) {
+    		
+    		e.printStackTrace();
+    		
+    		ListarTareasResponse errorResponse = new ListarTareasResponse();
+    		errorResponse.setCodigo(NuevoSPAParams.CODIGO_ERROR);
+    		errorResponse.setDescripcion(NuevoSPAParams.DESCRIPCION_ERROR);
+        	
+        	return errorResponse;
+    		
+    	}
+    }
 
 }

@@ -42,10 +42,14 @@ public class Configuracion {
         http
         .csrf().disable()
         .authorizeRequests()
-        .requestMatchers("/api/auth/login").permitAll()  // Permitir acceso al login
-        .anyRequest().authenticated()  // Proteger otras rutas
+        .requestMatchers("/api/auth/login").permitAll()
+        .requestMatchers("/h2-console/**").permitAll()
+        .anyRequest().authenticated()
         .and()
-        .addFilterBefore(interceptorRequest, UsernamePasswordAuthenticationFilter.class);  // Añadir el filtro JWT
+        .headers()
+            .frameOptions().disable()
+        .and()
+        .addFilterBefore(interceptorRequest, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
 	}

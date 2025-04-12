@@ -12,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.nuevospa.taskmanager.entity.Tarea;
+
 @Entity
 @Data
 @AllArgsConstructor

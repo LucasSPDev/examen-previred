@@ -20,6 +20,6 @@ public class EstadoTarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "NOMBRE", unique = true, nullable = false)
     private String nombre;
 }
