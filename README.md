@@ -1,8 +1,7 @@
 # 📌 Task Manager API
 
 Esta es una API RESTful desarrollada en Java con Spring Boot para la gestión de tareas. Permite a los usuarios autenticarse, crear, listar, actualizar y cambiar el estado de sus tareas. La autenticación se maneja mediante JWT.
-Ademas este proyecto usa una base de datos en memoria H2, la cual se inicia automaticamente.
-
+Además este proyecto usa una base de datos en memoria H2, la cual se inicia automáticamente.
 ---
 
 ## 🚀 Requisitos para ejecutar el proyecto
@@ -31,7 +30,7 @@ Ademas este proyecto usa una base de datos en memoria H2, la cual se inicia auto
    `http://localhost:8080`
    
    **Notas:**
-- Cuando el proyecto se leventa, puebla de forma automatica las tablas de USUARIO y ESTADO_TAREA.
+- Cuando el proyecto se levanta, puebla de forma automática las tablas de USUARIO y ESTADO_TAREA.
 - Aunque las contraseñas están encriptadas en la base de datos (`bcrypt`), para efectos de prueba todas usan la contraseña **`admin123`** en texto plano.
 
 | Nombre de Usuario | Email                   | Contraseña (en texto plano) | Rol     |
@@ -61,7 +60,7 @@ Permite autenticar a un usuario válido y obtener un token JWT para acceder a lo
 
 Usuario administrador:
 - Nombre Usuario: Admin
-- Password: admin123 (todos los usuario tienen la misma password)
+- Password: admin123 (todos los usuarios tienen la misma contraseña)
 
 **Requiere autenticación:**  
 ❌ No
@@ -86,14 +85,14 @@ Usuario administrador:
 **Notas:**
 - El token recibido debe ser incluido como header `Authorization` en todas las siguientes peticiones protegidas, con el formato:  
   `Authorization: Bearer <token>`
-- El token tiene una duracion de 1hra
+- El token tiene una duración de 1hra
 ---
 
 **Endpoint:**  
 `POST http://localhost:8080/api/tareas/crear`
 
 **Descripción:**  
-Permite crear una tara para el usuario indicado por su id, la tarea por defecto queda en estado PE (Pendiente)
+Permite crear una tarea para el usuario indicado por su id, la tarea por defecto queda en estado PE (Pendiente)
 
 **Requiere autenticación:**  
 ✅ SI
@@ -220,7 +219,7 @@ Permite eliminar una tarea por su id, lo que cambia su estado a EL(Eliminada)
 `POST http://localhost:8080/api/tareas/listarTareaPorEstado`
 
 **Descripción:**  
-Permite listar todas las tareas segun su estado, si en el campo estadoTarea se envia con valor 'ALL', lista todas las tareas sin importar su estado
+Permite listar todas las tareas según su estado, si en el campo estadoTarea se envía con valor 'ALL', lista todas las tareas sin importar su estado
 
 
 
