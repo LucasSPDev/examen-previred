@@ -2,6 +2,7 @@
 
 Esta es una API RESTful desarrollada en Java con Spring Boot para la gestión de tareas. Permite a los usuarios autenticarse, crear, listar, actualizar y cambiar el estado de sus tareas. La autenticación se maneja mediante JWT.
 Además este proyecto usa una base de datos en memoria H2, la cual se inicia automáticamente.
+
 ---
 
 ## 🚀 Requisitos para ejecutar el proyecto
