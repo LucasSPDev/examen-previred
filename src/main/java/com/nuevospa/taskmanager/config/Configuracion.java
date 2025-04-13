@@ -24,20 +24,6 @@ public class Configuracion {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {    
 
-//		http
-//		.authorizeRequests(auth -> auth
-//				.requestMatchers("/h2-console/**").permitAll()  // Permite el acceso sin autenticación a la consola H2
-//				.requestMatchers("/api/auth/login").permitAll()  // Permite el acceso sin autenticación al login
-//				.requestMatchers("/api/tareas/crear").permitAll()
-//				.anyRequest().authenticated()  // Las demás rutas requieren autenticación
-//				)
-//		.csrf(csrf -> csrf
-//				.ignoringRequestMatchers("/h2-console/**", "/api/auth/login") // Desactiva CSRF para la consola H2
-//				.disable()
-//				)
-//		.headers().frameOptions().disable();  // Permite cargar el iframe de la consola H2
-//
-//		return http.build();
 		
         http
         .csrf().disable()

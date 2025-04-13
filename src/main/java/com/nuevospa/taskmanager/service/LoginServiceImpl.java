@@ -87,14 +87,13 @@ public class LoginServiceImpl implements LoginService {
 		String token = null;
 
 		token = Jwts.builder()
-				.setSubject(usuario.getNombre()) // Establecer el nombre de usuario en el token
-				.claim("id", usuario.getId()) // Incluir el ID del usuario
-				.setIssuedAt(new Date()) // Fecha de emisión
-				.setExpiration(new Date(System.currentTimeMillis() + 3600000)) // Establecer la expiración del token (1 hora)
-				.signWith(SignatureAlgorithm.HS256, secretKey) // Firmar el JWT con la clave secreta
+				.setSubject(usuario.getNombre()) 
+				.claim("id", usuario.getId()) 
+				.setIssuedAt(new Date())
+				.setExpiration(new Date(System.currentTimeMillis() + 3600000)) // expiración del token (1 hora)
+				.signWith(SignatureAlgorithm.HS256, secretKey)
 				.compact();
 
-		// Verificar si el token fue generado correctamente
 		if (token == null || token.isEmpty()) {
 			response.setCodigo(NuevoSPAParams.CODIGO_ERROR_GENERACION_TOKEN);
 			response.setDescripcion(NuevoSPAParams.DESC_ERROR_GENERACION_TOKEN);

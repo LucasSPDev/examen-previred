@@ -31,24 +31,24 @@ public class InterceptorRequest extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-    	 System.out.println("Inicio Interceptor...");
+    	 System.out.println("Se valida ruta de la peticion: ["+request.getRequestURI()+"]");
     	 
          if (request.getRequestURI().equals("/api/auth/login") || request.getRequestURI().startsWith("/h2-console")) {
         	 
         	 System.out.println("Excepcion de login o h2-console");
-             filterChain.doFilter(request, response); // Continuar con la cadena de filtros
+             filterChain.doFilter(request, response); 
              return;
          }
 
-         String token = request.getHeader("Authorization"); // Obtener token del encabezado
+         String token = request.getHeader("Authorization");
 
-         // Si el token no está presente
+
          if (token == null || !token.startsWith("Bearer ")) {
              response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token no presente o formato incorrecto");
              return;
          }
 
-         token = token.substring(7); // Extraer el token eliminando "Bearer "
+         token = token.substring(7); 
 
          try {
              Claims claims = Jwts.parser()
@@ -56,7 +56,6 @@ public class InterceptorRequest extends OncePerRequestFilter {
                      .parseClaimsJws(token)
                      .getBody();
 
-             // Si el token es válido, establecer el usuario en el contexto de seguridad
              Authentication authentication = new UsernamePasswordAuthenticationToken(claims.getSubject(), null, new ArrayList<>());
              SecurityContextHolder.getContext().setAuthentication(authentication);
 

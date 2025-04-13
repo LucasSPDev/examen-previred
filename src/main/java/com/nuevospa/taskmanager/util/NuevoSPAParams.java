@@ -36,25 +36,18 @@ public class NuevoSPAParams {
     public static final String CODIGO_TAREAS_NO_ENCONTRADAS = "05";
     public static final String DESC_TAREAS_NO_ENCONTRADAS = "No se han encontrado tareas";
     
+    public static final String CODIGO_TAREA_NO_ENCONTRADA = "06";
+    public static final String DESC_TAREA_NO_ENCONTRADA = "Tarea no encontrada";
+    
+    public static final String CODIIGO_ERROR_ACTUALIZAR_TAREA ="07";
+    public static final String DESC_ERROR_ACTUALIZAR_TAREA = "No se ha podido actualizar la tarea";
+    
+    public static final String CODIIGO_ESTADO_TAREA_NO_VALIDO ="08";
+    public static final String DESC_ESTADO_TAREA_NO_VALIDO = "El campo 'Estado Tarea' no es valido";
+    
 
-    // =======================
-    // Mensajes Comunes
-    // =======================
-    public static final String MENSAJE_USUARIO_NO_ENCONTRADO = "El usuario no fue encontrado";
-    public static final String MENSAJE_TAREA_NO_ENCONTRADA = "La tarea no fue encontrada";
-    public static final String MENSAJE_ERROR_CREACION_TAREA = "Error al crear la tarea";
-    public static final String MENSAJE_ERROR_ACTUALIZACION_TAREA = "Error al actualizar la tarea";
-    
-    // =======================
-    // Parámetros Utilizados
-    // =======================
-    public static final String PARAM_TOKEN = "token";
-    public static final String PARAM_USUARIO_ID = "usuarioId";
-    
-    // =======================
-    // Códigos de Estado de Tarea
-    // =======================
-    public static final String ESTADO_TAREA_PENDIENTE = "Pendiente";
-    public static final String ESTADO_TAREA_EN_PROCESO = "En Proceso";
-    public static final String ESTADO_TAREA_COMPLETADA = "Completada";
+    public static final String ESTADO_TAREA_PENDIENTE = "PE";
+    public static final String ESTADO_TAREA_EN_PROCESO = "EP";
+    public static final String ESTADO_TAREA_COMPLETADA = "CO";
+    public static final String ESTADO_TAREA_ELIMINADA = "EL";
 }

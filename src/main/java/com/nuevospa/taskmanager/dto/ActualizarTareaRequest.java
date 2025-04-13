@@ -5,9 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CrearTareaRequest {
+public class ActualizarTareaRequest {
 	
+	private Long idTarea;
     private String tituloTarea;
     private String descripcionTarea;
-    private Long idUsuario;;
+    private String estadoTarea;
 }

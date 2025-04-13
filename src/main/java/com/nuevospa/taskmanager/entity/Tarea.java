@@ -12,6 +12,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -34,4 +38,12 @@ public class Tarea {
     @ManyToOne
     @JoinColumn(name = "estado_id", nullable = false)
     private EstadoTarea estadoTarea;
+    
+    @CreationTimestamp
+    @Column(name = "fecha_creacion", updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    @UpdateTimestamp
+    @Column(name = "fecha_actualizacion")
+    private LocalDateTime fechaActualizacion;
 }

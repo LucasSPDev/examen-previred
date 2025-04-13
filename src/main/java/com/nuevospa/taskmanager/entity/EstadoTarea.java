@@ -22,4 +22,7 @@ public class EstadoTarea {
 
     @Column(name = "NOMBRE", unique = true, nullable = false)
     private String nombre;
+    
+    @Column(name = "DESCRIPCION", nullable = true)
+    private String descripcion;
 }

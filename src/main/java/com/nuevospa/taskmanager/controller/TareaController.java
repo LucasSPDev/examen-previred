@@ -4,6 +4,10 @@ import com.nuevospa.taskmanager.dto.CrearTareaRequest;
 import com.nuevospa.taskmanager.dto.CrearTareaResponse;
 import com.nuevospa.taskmanager.dto.ListarTareasRequest;
 import com.nuevospa.taskmanager.dto.ListarTareasResponse;
+import com.nuevospa.taskmanager.dto.ActualizarTareaRequest;
+import com.nuevospa.taskmanager.dto.ActualizarTareaResponse;
+import com.nuevospa.taskmanager.dto.EliminarTareaRequest;
+import com.nuevospa.taskmanager.dto.EliminarTareaResponse;
 import com.nuevospa.taskmanager.dto.TareaEliminarRequest;
 import com.nuevospa.taskmanager.dto.TareaPorIdRequest;
 import com.nuevospa.taskmanager.dto.RespuestaBase;
@@ -40,6 +44,31 @@ public class TareaController {
     	response.setDescripcion(NuevoSPAParams.DESCRIPCION_OK);
     	
     	response = tareaService.listarTareasPorEstado(request);
+       
+        return ResponseEntity.ok(response);
+    }
+    
+    
+    @PostMapping("/actualizar")
+    public ResponseEntity<ActualizarTareaResponse> actualizarTarea(@RequestBody ActualizarTareaRequest request) {
+    	
+    	ActualizarTareaResponse response = new ActualizarTareaResponse();
+    	response.setCodigo(NuevoSPAParams.CODIGO_OK);
+    	response.setDescripcion(NuevoSPAParams.DESCRIPCION_OK);
+    	
+    	response = tareaService.actualizarTarea(request);
+       
+        return ResponseEntity.ok(response);
+    }
+    
+    @PostMapping("/eliminar")
+    public ResponseEntity<EliminarTareaResponse> eliminarTarea(@RequestBody EliminarTareaRequest request) {
+    	
+    	EliminarTareaResponse response = new EliminarTareaResponse();
+    	response.setCodigo(NuevoSPAParams.CODIGO_OK);
+    	response.setDescripcion(NuevoSPAParams.DESCRIPCION_OK);
+    	
+    	response = tareaService.eliminarTarea(request);
        
         return ResponseEntity.ok(response);
     }

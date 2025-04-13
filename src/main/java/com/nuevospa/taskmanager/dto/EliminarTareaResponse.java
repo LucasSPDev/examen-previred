@@ -6,12 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CrearTareaResponse extends RespuestaBase {
+public class EliminarTareaResponse extends RespuestaBase{
 	
-	private Long idUsuario;
     private TareaDTO tarea;
     
-    public CrearTareaResponse() {
+    public EliminarTareaResponse() {
         this.tarea = new TareaDTO(); 
     }
 }
