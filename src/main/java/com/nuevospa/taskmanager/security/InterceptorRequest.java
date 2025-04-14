@@ -33,9 +33,13 @@ public class InterceptorRequest extends OncePerRequestFilter {
 
     	 System.out.println("Se valida ruta de la peticion: ["+request.getRequestURI()+"]");
     	 
-         if (request.getRequestURI().equals("/api/auth/login") || request.getRequestURI().startsWith("/h2-console")) {
+         if (request.getRequestURI().equals("/api/auth/login") || request.getRequestURI().startsWith("/h2-console") ||    
+             request.getRequestURI().startsWith("/swagger-ui") ||
+             request.getRequestURI().startsWith("/v3/api-docs") ||
+             request.getRequestURI().startsWith("/swagger-resources") ||
+             request.getRequestURI().startsWith("/webjars")) {
         	 
-        	 System.out.println("Excepcion de login o h2-console");
+        	 System.out.println("Excepcion de peticion");
              filterChain.doFilter(request, response); 
              return;
          }

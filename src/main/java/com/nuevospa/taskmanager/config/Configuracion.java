@@ -30,6 +30,7 @@ public class Configuracion {
         .authorizeRequests()
         .requestMatchers("/api/auth/login").permitAll()
         .requestMatchers("/h2-console/**").permitAll()
+        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .headers()

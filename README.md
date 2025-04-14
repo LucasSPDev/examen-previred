@@ -1,14 +1,15 @@
 # 📌 Task Manager API
 
 Esta es una API RESTful desarrollada en Java con Spring Boot para la gestión de tareas. Permite a los usuarios autenticarse, crear, listar, actualizar y cambiar el estado de sus tareas. La autenticación se maneja mediante JWT.
+Además este proyecto usa una base de datos en memoria H2, la cual se inicia automáticamente.
 
 ---
 
 ## 🚀 Requisitos para ejecutar el proyecto
 
 - Java 17
-- Maven 3.x
-- Spring Boot 3.x
+- Maven 3.9.7
+- Spring Boot 3.4.4
 
 ---
 
@@ -28,6 +29,19 @@ Esta es una API RESTful desarrollada en Java con Spring Boot para la gestión de
    ```
    Por defecto se ejecuta en:  
    `http://localhost:8080`
+   
+   Para acceder a la documentacion con swagger:
+   `http://localhost:8080/swagger-ui/index.html`
+   
+   **Notas:**
+- Cuando el proyecto se levanta, puebla de forma automática las tablas de USUARIO y ESTADO_TAREA (resources\import.sql).
+- Aunque las contraseñas están encriptadas en la base de datos (`bcrypt`), para efectos de prueba todas usan la contraseña **`admin123`** en texto plano.
+
+| Nombre de Usuario | Email                   | Contraseña (en texto plano) | Rol     |
+|-------------------|-------------------------|------------------------------|---------|
+| Admin             | admin@miempresa.com     | `admin123`                   | Admin   |
+| Usuario1          | usuario1@miempresa.com  | `admin123`                   | Usuario |
+| Usuario2          | usuario2@miempresa.com  | `admin123`                   | Usuario |
 
 ---
 
@@ -50,7 +64,7 @@ Permite autenticar a un usuario válido y obtener un token JWT para acceder a lo
 
 Usuario administrador:
 - Nombre Usuario: Admin
-- Password: admin123
+- Password: admin123 (todos los usuarios tienen la misma contraseña)
 
 **Requiere autenticación:**  
 ❌ No
@@ -75,14 +89,14 @@ Usuario administrador:
 **Notas:**
 - El token recibido debe ser incluido como header `Authorization` en todas las siguientes peticiones protegidas, con el formato:  
   `Authorization: Bearer <token>`
-- El token tiene una duracion de 1hra
+- El token tiene una duración de 1hra
 ---
 
 **Endpoint:**  
 `POST http://localhost:8080/api/tareas/crear`
 
 **Descripción:**  
-Permite crear una tara para el usuario indicado por su id, la tarea por defecto queda en estado PE (Pendiente)
+Permite crear una tarea para el usuario indicado por su id, la tarea por defecto queda en estado PE (Pendiente)
 
 **Requiere autenticación:**  
 ✅ SI
@@ -168,6 +182,125 @@ Permite actualizar una tarea por su id, pudiendo modificar el titulo, descripcio
 
 ---
 
+**Endpoint:**  
+`POST http://localhost:8080/api/tareas/eliminar`
+
+**Descripción:**  
+Permite eliminar una tarea por su id, lo que cambia su estado a EL(Eliminada)
+
+
+
+**Requiere autenticación:**  
+✅ SI
+
+**Request (JSON):**
+```json
+{
+  "idTarea":3
+}
+```
+
+**Response (JSON):**
+```json
+{
+    "codigo": "200",
+    "descripcion": "Operación realizada con éxito",
+    "tarea": {
+        "id": 3,
+        "titulo": "Tarea de ejemplo",
+        "descripcion": "Descripción de la tarea de ejemplo",
+        "estadoTarea": {
+            "id": 4,
+            "nombre": "EL"
+        },
+        "fechaCreacion": "2025-04-13T15:18:11.16441",
+        "fechaActualizacion": "2025-04-13T15:18:11.16441"
+    }
+}
+```
+
+**Endpoint:**  
+`POST http://localhost:8080/api/tareas/listarTareaPorEstado`
+
+**Descripción:**  
+Permite listar todas las tareas según su estado, si en el campo estadoTarea se envía con valor 'ALL', lista todas las tareas sin importar su estado
+
+
+
+**Requiere autenticación:**  
+✅ SI
+
+**Request (JSON):**
+```json
+{
+  "estadoTarea": "ALL"
+}
+```
+
+**Response (JSON):**
+```json
+{
+    "codigo": "200",
+    "descripcion": "Operación realizada con éxito",
+    "listaTareas": [
+        {
+            "id": 1,
+            "titulo": "Tarea de ejemplo",
+            "descripcion": "Descripción de la tarea de ejemplo",
+            "estadoTarea": {
+                "id": 1,
+                "nombre": "PE"
+            },
+            "fechaCreacion": "2025-04-13T15:18:08.275821",
+            "fechaActualizacion": "2025-04-13T15:18:08.275821"
+        },
+        {
+            "id": 2,
+            "titulo": "Tarea de ejemplo",
+            "descripcion": "Descripción de la tarea de ejemplo",
+            "estadoTarea": {
+                "id": 1,
+                "nombre": "PE"
+            },
+            "fechaCreacion": "2025-04-13T15:18:10.229798",
+            "fechaActualizacion": "2025-04-13T15:18:10.229798"
+        },
+        {
+            "id": 3,
+            "titulo": "Tarea de ejemplo",
+            "descripcion": "Descripción de la tarea de ejemplo",
+            "estadoTarea": {
+                "id": 4,
+                "nombre": "EL"
+            },
+            "fechaCreacion": "2025-04-13T15:18:11.16441",
+            "fechaActualizacion": "2025-04-13T15:18:31.097856"
+        },
+        {
+            "id": 4,
+            "titulo": "Tarea de ejemplo",
+            "descripcion": "Descripción de la tarea de ejemplo",
+            "estadoTarea": {
+                "id": 1,
+                "nombre": "PE"
+            },
+            "fechaCreacion": "2025-04-13T15:18:12.055416",
+            "fechaActualizacion": "2025-04-13T15:18:12.055416"
+        },
+        {
+            "id": 5,
+            "titulo": "Tarea de ejemplo",
+            "descripcion": "Descripción de la tarea de ejemplo",
+            "estadoTarea": {
+                "id": 1,
+                "nombre": "PE"
+            },
+            "fechaCreacion": "2025-04-13T15:18:12.891238",
+            "fechaActualizacion": "2025-04-13T15:18:12.891238"
+        }
+    ]
+}
+```
 
 ## 🧰 Probar con Postman
 
